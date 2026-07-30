@@ -1,6 +1,7 @@
 package com.arath.minierp.model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 
 public class Employee {
@@ -14,15 +15,18 @@ public class Employee {
     private String telefono;
 
     private LocalDate fechaNacimiento;    
-    private String puesto;
+    private Puesto puesto;
     private Genero genero;
 
     public enum Genero{
                     HOMBRE,
                     MUJER
                 }
+    public enum Puesto {
+    BACKEND, FRONTEND, FULLSTACK, SOPORTE_TECNICO, RECURSOS_HUMANOS, ANALISTA
+}
 
-    public Employee(int id, String nombre, String apellido, LocalDate fechaNacimiento, String email, String telefono, String puesto,
+    public Employee(int id, String nombre, String apellido, LocalDate fechaNacimiento, String email, String telefono, Puesto puesto,
             Genero genero) {
         this.id = id;
         this.nombre = nombre;
@@ -38,10 +42,6 @@ public class Employee {
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getNombre() {
@@ -84,11 +84,11 @@ public class Employee {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public String getPuesto() {
+    public Puesto getPuesto() {
         return puesto;
     }
 
-    public void setPuesto(String puesto) {
+    public void setPuesto(Puesto puesto) {
         this.puesto = puesto;
     }
 
@@ -111,9 +111,22 @@ public class Employee {
             ", genero=" + genero +
             ", fechaNacimiento=" + fechaNacimiento +
             '}';
+
+        
+        }
+
+   @Override
+public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof Employee)) return false;
+    Employee that = (Employee) o;
+    return id == that.getId();
 }
 
-   
+@Override
+public int hashCode() {
+    return Objects.hash(id);
+}
     }
             
         

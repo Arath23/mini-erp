@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import com.arath.minierp.model.Employee;
 import com.arath.minierp.model.Employee.Genero;
+import com.arath.minierp.model.Employee.Puesto;
 
 public class Main {
 
@@ -68,8 +69,7 @@ public class Main {
                     String telefono = sc.nextLine();
 
                     System.out.print("Puesto: ");
-                    String puesto = sc.nextLine();
-
+                    Puesto puesto = Puesto.valueOf(sc.nextLine().toUpperCase());
                     System.out.print("Genero (HOMBRE/MUJER): ");
                     Genero genero = Genero.valueOf(sc.nextLine().toUpperCase());
 
@@ -91,53 +91,43 @@ public class Main {
                     break;
 
             case 4:
+                System.out.print("ID del empleado a actualizar: ");
+                int idActualizar = sc.nextInt();
+                sc.nextLine();
 
-                        System.out.print("ID del empleado a actualizar: ");
-                        int idActualizar = sc.nextInt();
-                        sc.nextLine();
+                System.out.print("Nuevo nombre: ");
+                String nuevoNombre = sc.nextLine();
 
-                        System.out.print("Nuevo nombre: ");
-                        String nuevoNombre = sc.nextLine();
+                System.out.print("Nuevo apellido: ");
+                String nuevoApellido = sc.nextLine();
 
-                        System.out.print("Nuevo apellido: ");
-                        String nuevoApellido = sc.nextLine();
+                System.out.print("Nueva fecha (AAAA-MM-DD): ");
+                LocalDate nuevaFecha = LocalDate.parse(sc.nextLine());
 
-                        System.out.print("Nueva fecha (AAAA-MM-DD): ");
-                        LocalDate nuevaFecha = LocalDate.parse(sc.nextLine());
+                System.out.print("Nuevo email: ");
+                String emailActualizado = sc.nextLine();
 
-                        System.out.print("Nuevo email: ");
-                        String emailActualizado = sc.nextLine();
+                System.out.print("Nuevo telefono: ");
+                String nuevoTelefono = sc.nextLine();
 
-                        System.out.print("Nuevo telefono: ");
-                        String nuevoTelefono = sc.nextLine();
+                System.out.print("Nuevo puesto: ");
+                Puesto nuevoPuesto = Puesto.valueOf(sc.nextLine().toUpperCase());
 
-                        System.out.print("Nuevo puesto: ");
-                        String nuevoPuesto = sc.nextLine();
+                System.out.print("Nuevo genero (HOMBRE/MUJER): ");
+                Genero nuevoGenero = Genero.valueOf(sc.nextLine().toUpperCase());
 
-                        System.out.print("Nuevo genero (HOMBRE/MUJER): ");
-                        Genero nuevoGenero = Genero.valueOf(sc.nextLine().toUpperCase());
+                Employee empleadoActualizado = new Employee(idActualizar,
+                    nuevoNombre, nuevoApellido, nuevaFecha,
+                    emailActualizado, nuevoTelefono, nuevoPuesto, nuevoGenero);
 
-                        Employee empleadoActualizado = new Employee(
-                                idActualizar,
-                                nuevoNombre,
-                                nuevoApellido,
-                                nuevaFecha,
-                                emailActualizado,
-                                nuevoTelefono,
-                                nuevoPuesto,
-                                nuevoGenero
-                        );
+                boolean actualizado = repository.actualizarEmpleado(empleadoActualizado);
 
-                        boolean actualizado =
-                                repository.actualizarEmpleado(empleadoActualizado);
-
-                        if (actualizado) {
-                            System.out.println("Empleado actualizado correctamente.");
-                        } else {
-                            System.out.println("Empleado no encontrado.");
-                        }
-
-                        break;
+                if (actualizado) {
+                    System.out.println("Empleado actualizado correctamente.");
+                } else {
+                    System.out.println("Empleado no encontrado.");
+                }
+                break;
 
             case 5: 
             System.out.println("Ingresa id del usurio: ");
@@ -147,9 +137,8 @@ public class Main {
                     } else {
                      System.out.println("Empleado no encontrado");
                     }
-            break; 
-            
-                       case 6:
+            break;
+             case 6:
                 System.out.println("Hasta luego.");
                 break;
         }

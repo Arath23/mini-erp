@@ -6,93 +6,78 @@ import java.util.Optional;
 
 import com.arath.minierp.model.Employee;
 
-public class EmployeeRepository{
-    
+public class EmployeeRepository {
+
     private List<Employee> empleados = EmployeeDatasource.employees();
-    
-    public List<Employee> listaEmpleados(){
-    return empleados;
-    }
-    
-    
-    public void guardarEmpleado(Employee employee){
-    empleados.add(employee);
 
+    public List<Employee> listaEmpleados() {
+        return empleados;
     }
 
-    
-   public boolean eliminarEmpleado(int id) {
-
-    Optional<Employee> empleadoOptional = buscarEmpleadoPorId(id);
-
-    if (empleadoOptional.isPresent()) {
-
-        empleados.remove(empleadoOptional.get());
-
-        return true;
+    public void guardarEmpleado(Employee employee) {
+        empleados.add(employee);
     }
 
-    return false;
-}
-    public boolean actualizarEmpleado(Employee employee){
+    public boolean eliminarEmpleado(int id) {
+        Optional<Employee> empleadoOptional = buscarEmpleadoPorId(id);
 
-        Optional<Employee> empleadoOptional = 
-            buscarEmpleadoPorId(employee.getId());
-
-         if (empleadoOptional.isPresent()) {
-             Employee empleadoActual = empleadoOptional.get();
-
-
-                empleadoActual.setNombre(employee.getNombre());
-                empleadoActual.setApellido(employee.getApellido());
-                empleadoActual.setEmail(employee.getEmail());
-                empleadoActual.setTelefono(employee.getTelefono());
-                empleadoActual.setFechaNacimiento(employee.getFechaNacimiento());
-                empleadoActual.setPuesto(employee.getPuesto());
-                empleadoActual.setGenero(employee.getGenero());
-
-                return true;
-            }
-            return false;
+        if (empleadoOptional.isPresent()) {
+            empleados.remove(empleadoOptional.get());
+            return true;
+        }
+        return false;
     }
 
-    public Optional<Employee> buscarEmpleadoPorId(int id){
-        return listaEmpleados()
-        .stream()
-        .filter(empleado -> empleado.getId() == id)
-        .findFirst();
+    public boolean actualizarEmpleado(Employee employee) {
+        Optional<Employee> empleadoOptional = buscarEmpleadoPorId(employee.getId());
 
-    }
-    
-    public Optional<Employee> buscarEmpleadoPorEmail(String email){
-      return listaEmpleados()
-        .stream()
-        .filter(empleado -> empleado.getEmail().equals(email) )
-        .findFirst();
-        
-    }
+        if (empleadoOptional.isPresent()) {
+            Employee empleadoActual = empleadoOptional.get();
 
-    public Optional<Employee> buscarEmpleadoPorNombre(String nombre){
-        return listaEmpleados()
-        .stream()
-        .filter(empleado -> empleado.getNombre().equals(nombre))
-        .findFirst();
+            empleadoActual.setNombre(employee.getNombre());
+            empleadoActual.setApellido(employee.getApellido());
+            empleadoActual.setEmail(employee.getEmail());
+            empleadoActual.setTelefono(employee.getTelefono());
+            empleadoActual.setFechaNacimiento(employee.getFechaNacimiento());
+            empleadoActual.setPuesto(employee.getPuesto());
+            empleadoActual.setGenero(employee.getGenero());
+
+            return true;
+        }
+        return false;
     }
 
-    public Optional<Employee> buscarEmpleadoPorFechaNacimiento(LocalDate fechaNacimiento){
-        return listaEmpleados()
-        .stream()
-        .filter(empleado -> empleado.getFechaNacimiento().equals(fechaNacimiento))
-        .findFirst();
-
+    private Optional<Employee> buscarEmpleadoPorId(int id) {
+        return listaEmpleados().stream()
+                .filter(empleado -> empleado.getId() == id)
+                .findFirst();
     }
-    public Optional<Employee> buscarEmpleadoPorTelefono(String telefono){
-        return listaEmpleados()
-        .stream()
-        .filter(empleado -> empleado.getTelefono().equals(telefono))
-        .findFirst();
+
+    // Único -> Optional está bien
+    public Optional<Employee> buscarEmpleadoPorEmail(String email) {
+        return listaEmpleados().stream()
+                .filter(empleado -> email.equals(empleado.getEmail()))
+                .findFirst();
+    }
+
+    // NO único -> devuelve List
+    public List<Employee> buscarEmpleadosPorNombre(String nombre) {
+        return listaEmpleados().stream()
+                .filter(empleado -> nombre.equalsIgnoreCase(empleado.getNombre()))
+                .toList();
+    }
+
+    // NO único -> devuelve List
+    public List<Employee> buscarEmpleadosPorFechaNacimiento(LocalDate fechaNacimiento) {
+        return listaEmpleados().stream()
+                .filter(empleado -> fechaNacimiento.equals(empleado.getFechaNacimiento()))
+                .toList();
+    }
+
+    // NO único -> devuelve List
+    public List<Employee> buscarEmpleadosPorTelefono(String telefono) {
+        return listaEmpleados().stream()
+                .filter(empleado -> telefono.equals(empleado.getTelefono()))
+                .toList();
     }
 }
-
-
-
