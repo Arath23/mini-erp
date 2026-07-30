@@ -6,7 +6,7 @@ import java.util.Scanner;
 import com.arath.minierp.model.Employee;
 import com.arath.minierp.model.Employee.Genero;
 
-public class AddEmployer {
+public class Main {
 
     public static void main(String[] args) {
         
