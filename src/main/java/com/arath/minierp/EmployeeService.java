@@ -21,18 +21,14 @@ public class EmployeeService {
         return false;
     }
 
-    if (buscarEmpleado(empleado.getEmail()).isPresent()) {
+    if (buscarEmpleadoPorEmail(empleado.getEmail()).isPresent()) {
         return false;
     }
 
     repository.guardarEmpleado(empleado);
     return true;
 }
-        public Optional<Employee> buscarEmpleado(String email){
-             return repository.buscarEmpleadoPorEmail(email);
-
-        } 
-
+       
     public boolean actualizarEmpleado(Employee empleado){
         
         if (repository.buscarEmpleadoPorId(empleado.getId()).isEmpty()) {
@@ -51,19 +47,19 @@ public class EmployeeService {
         return repository.eliminarEmpleado(id);
     }
 
-    public Optional<Employee> buscarEmpleadoporID(int id){
+    public Optional<Employee> buscarEmpleadoPorId(int id){
         return repository.buscarEmpleadoPorId(id);
     }
 
-    public List<Employee> buscarEmpleadoporNombre(String nombre){
+    public List<Employee> buscarEmpleadoPorNombre(String nombre){
         return repository.buscarEmpleadosPorNombre(nombre);
     }
 
-    public Optional<Employee> buscarEmpleadoporEmail(String email){
+    public Optional<Employee> buscarEmpleadoPorEmail(String email){
         return repository.buscarEmpleadoPorEmail(email);
     }
 
-    public List<Employee> buscarEmpleadoporTelefono(String telefono){
+    public List<Employee> buscarEmpleadoPorTelefono(String telefono){
         return repository.buscarEmpleadosPorTelefono(telefono);
     }
 }

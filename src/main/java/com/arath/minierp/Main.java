@@ -1,4 +1,4 @@
-package com.arath.minierp.repository;
+package com.arath.minierp;
 
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -6,7 +6,6 @@ import java.util.Scanner;
 import com.arath.minierp.model.Employee;
 import com.arath.minierp.model.Employee.Genero;
 import com.arath.minierp.model.Employee.Puesto;
-import com.arath.minierp.service.EmployeeService;
 
 public class Main {
 
@@ -41,7 +40,7 @@ public class Main {
                 System.out.println("Ingresa el email: ");
               String email = sc.next();
 
-               service.buscarEmpleadoporEmail(email)
+               service.buscarEmpleadoPorEmail(email)
                 .ifPresentOrElse(
                 System.out::println,
                 () -> System.out.println("Empleado no encontrado")
