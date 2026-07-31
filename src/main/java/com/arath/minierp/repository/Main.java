@@ -6,12 +6,13 @@ import java.util.Scanner;
 import com.arath.minierp.model.Employee;
 import com.arath.minierp.model.Employee.Genero;
 import com.arath.minierp.model.Employee.Puesto;
+import com.arath.minierp.service.EmployeeService;
 
 public class Main {
 
     public static void main(String[] args) {
-        
-        EmployeeRepository repository = new EmployeeRepository();
+
+        EmployeeService service = new EmployeeService();
         
         Scanner sc = new Scanner(System.in);
                 
@@ -33,14 +34,14 @@ public class Main {
     switch (opcion) {
         
             case 1 :
-                     repository.listaEmpleados()
+                     service.listarEmpleados()
                      .forEach(System.out::println);
             break;
             case 2 :
                 System.out.println("Ingresa el email: ");
               String email = sc.next();
 
-               repository.buscarEmpleadoPorEmail(email)
+               service.buscarEmpleadoporEmail(email)
                 .ifPresentOrElse(
                 System.out::println,
                 () -> System.out.println("Empleado no encontrado")
@@ -84,10 +85,16 @@ public class Main {
                             genero
                     );
 
-                    repository.guardarEmpleado(nuevoEmpleado);
+                  
+                    boolean guardado = service.guardarEmpleado(nuevoEmpleado);
+                    
 
-                    System.out.println("Empleado agregado correctamente.");
+                    if(guardado){
 
+                    System.out.println("Empleado guardado correctamente.");
+                    } else {
+                        System.out.println("No se pudo guardar el empleado");
+                    }
                     break;
 
             case 4:
@@ -120,7 +127,7 @@ public class Main {
                     nuevoNombre, nuevoApellido, nuevaFecha,
                     emailActualizado, nuevoTelefono, nuevoPuesto, nuevoGenero);
 
-                boolean actualizado = repository.actualizarEmpleado(empleadoActualizado);
+                boolean actualizado = service.actualizarEmpleado(empleadoActualizado);
 
                 if (actualizado) {
                     System.out.println("Empleado actualizado correctamente.");
@@ -130,9 +137,10 @@ public class Main {
                 break;
 
             case 5: 
-            System.out.println("Ingresa id del usurio: ");
+
+            System.out.println("Ingresa id del usuario: ");
             int idEliminar = sc.nextInt();
-             if(repository.eliminarEmpleado(idEliminar)){
+             if(service.eliminarEmpleado(idEliminar)){
                       System.out.println("Empleado eliminado correctamente");
                     } else {
                      System.out.println("Empleado no encontrado");

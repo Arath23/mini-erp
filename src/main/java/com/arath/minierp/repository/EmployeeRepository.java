@@ -47,7 +47,7 @@ public class EmployeeRepository {
         return false;
     }
 
-    private Optional<Employee> buscarEmpleadoPorId(int id) {
+    public Optional<Employee> buscarEmpleadoPorId(int id) {
         return listaEmpleados().stream()
                 .filter(empleado -> empleado.getId() == id)
                 .findFirst();
